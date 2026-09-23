@@ -109,11 +109,15 @@ button,input,select{ font:inherit; color:inherit; }
 .nav__inner{ display:flex; align-items:center; gap:18px; }
 .nav__brand{ display:flex; align-items:center; gap:11px; margin-right:auto; }
 .nav__logo{
-  width:40px; height:40px; border-radius:12px; flex:0 0 auto;
-  display:grid; place-items:center;
-  background:linear-gradient(135deg, var(--brand), var(--violet));
-  color:#fff; font-weight:800; font-size:19px;
-  box-shadow:0 8px 20px -10px rgba(37,99,235,.9);
+  width:46px; height:46px; flex:0 0 auto;
+  padding:4px; border-radius:13px;
+  background:#fff; object-fit:contain;
+  box-shadow:0 10px 24px -14px rgba(2,6,23,.95), 0 0 0 1px rgba(255,255,255,.18);
+  transition:width .3s ease, height .3s ease, padding .3s ease, box-shadow .3s ease;
+}
+.nav.is-stuck .nav__logo{
+  width:40px; height:40px; padding:3px;
+  box-shadow:0 6px 16px -10px rgba(15,23,42,.5), 0 0 0 1px var(--line);
 }
 .nav__brand-text{ display:flex; flex-direction:column; line-height:1.15; }
 .nav__brand-text strong{ font-size:16px; letter-spacing:.4px; color:#fff; }
@@ -479,6 +483,7 @@ button,input,select{ font:inherit; color:inherit; }
   .hero__stats{ gap:20px; }
   .stat__divider{ height:26px; }
   .footer__inner{ flex-direction:column; }
+  .nav__logo{ width:40px; height:40px; padding:3px; border-radius:11px; }
   .btn--lg{ padding:14px 22px; font-size:15px; }
 }
 @media (max-width:380px){
