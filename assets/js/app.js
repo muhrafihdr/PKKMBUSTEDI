@@ -10,8 +10,24 @@
   var DEMO_KEY = 'pkkmb_usted_votes_v1';
   var VOTED_KEY = 'pkkmb_usted_voted_v1';
 
+  /* Fallback kecil kalau config.js gagal dimuat (mis. browser dalam aplikasi). */
+  var DEFAULT_SOSMED_OPTIONS = ['Instagram', 'TikTok', 'Facebook', 'YouTube', 'X / Twitter', 'WhatsApp'];
+
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+  /* Daftar pilihan polling. Prioritas: config.js → opsi statis di HTML.
+     Jadi pilihan tetap muncul walau config.js tidak sempat dimuat/diblokir. */
+  function pollOptions() {
+    if (CFG.POLL_OPTIONS && CFG.POLL_OPTIONS.length) return CFG.POLL_OPTIONS;
+    return $$('#options .opt-item').map(function (el) {
+      var emojiEl = $('.emoji', el);
+      return { value: el.getAttribute('data-value'), emoji: emojiEl ? emojiEl.textContent : '' };
+    });
+  }
+  function sosmedOptions() {
+    return (CFG.SOSMED_OPTIONS && CFG.SOSMED_OPTIONS.length) ? CFG.SOSMED_OPTIONS : DEFAULT_SOSMED_OPTIONS;
+  }
 
   /* ---------------------------------------------------------------- state */
   var state = {
@@ -139,7 +155,7 @@
     });
 
     // pastikan semua opsi tetap tampil walau 0
-    (CFG.POLL_OPTIONS || []).forEach(function (o) {
+    pollOptions().forEach(function (o) {
       if (!(o.value in counts)) counts[o.value] = 0;
     });
 
@@ -160,27 +176,42 @@
 
   function renderOptions() {
     var wrap = $('#options');
-    var html = (CFG.POLL_OPTIONS || []).map(function (o) {
+
+    // Selalu bangun ulang dari config (kalau ada) supaya config.js tetap jadi
+    // sumber utama. Kalau config.js gagal dimuat, pollOptions() memakai opsi
+    // statis yang sudah tertulis di HTML.
+    wrap.innerHTML = pollOptions().map(function (o) {
       return '' +
         '<label class="opt-item" data-value="' + esc(o.value) + '">' +
           '<input type="radio" name="sumber" value="' + esc(o.value) + '" />' +
-          '<span class="emoji">' + (o.emoji || '•') + '</span>' +
+          '<span class="emoji">' + (o.emoji || '\u2022') + '</span>' +
           '<span class="txt">' + esc(o.value) + '</span>' +
           '<span class="tick"></span>' +
         '</label>';
     }).join('');
-    wrap.innerHTML = html;
 
-    wrap.addEventListener('click', function (e) {
-      var item = e.target.closest('.opt-item');
-      if (!item) return;
-      selectSumber(item.getAttribute('data-value'));
+    var pick = function (target) {
+      var item = (target && target.closest) ? target.closest('.opt-item') : null;
+      if (!item) {
+        var el = target;
+        while (el && el !== wrap) {
+          if (el.classList && el.classList.contains('opt-item')) { item = el; break; }
+          el = el.parentNode;
+        }
+      }
+      if (item) selectSumber(item.getAttribute('data-value'));
+    };
+
+    wrap.addEventListener('click', function (e) { pick(e.target); });
+    // Fallback andal untuk HP / browser dalam aplikasi: pakai event native radio.
+    wrap.addEventListener('change', function (e) {
+      if (e.target && e.target.name === 'sumber') selectSumber(e.target.value);
     });
   }
 
   function renderChips() {
     var wrap = $('#sosmedChips');
-    wrap.innerHTML = (CFG.SOSMED_OPTIONS || []).map(function (v) {
+    wrap.innerHTML = sosmedOptions().map(function (v) {
       return '<button type="button" class="chip" data-value="' + esc(v) + '">' + esc(v) + '</button>';
     }).join('');
 
@@ -242,7 +273,7 @@
     state.lastTotal = total;
     animateNumber($('#heroTotal'), total);
     animateNumber($('#resultTotal'), total);
-    $('#heroOptions').textContent = (CFG.POLL_OPTIONS || []).length;
+    $('#heroOptions').textContent = pollOptions().length;
     var stamp = 'baru saja';
     $('#heroUpdated').textContent = stamp;
     $('#resultUpdated').textContent = 'diperbarui ' + fmtTime(new Date());

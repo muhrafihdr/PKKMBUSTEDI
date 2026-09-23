@@ -113,6 +113,15 @@ Semua pengaturan ada di **`assets/js/config.js`**:
 > ⚠️ Kalau kamu mengubah `POLL_OPTIONS`, samakan juga
 > `DEFAULT_OPTIONS` di `apps-script/Code.gs`.
 
+> 💡 Daftar pilihan juga ditulis **statis di `index.html`** (di dalam
+> `<div class="options" id="options">`). Ini supaya pilihan tetap muncul
+> di HP / browser dalam aplikasi walau `config.js` gagal dimuat. Saat
+> `config.js` normal, daftar dari config yang dipakai. Kalau kamu mengubah
+> `POLL_OPTIONS`, sebaiknya samakan juga daftar statis tersebut.
+
+> 🔄 Setelah mengubah CSS/JS, naikkan nomor versi pada `?v=2026.1` di
+> `index.html` (link CSS + script) agar HP tidak memakai file cache lama.
+
 ### Pilihan polling saat ini
 
 📱 Media Sosial · 🧑‍🤝‍🧑 Teman/Sahabat · 👨‍🏫 Dosen/Guru ·

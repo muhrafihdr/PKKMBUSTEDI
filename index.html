@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/style.css?v=2026.1" />
 <link rel="icon" href="assets/img/logo-usted-160.png" type="image/png" />
 <link rel="apple-touch-icon" href="assets/img/logo-usted.png" />
 </head>
@@ -29,7 +29,7 @@
            width="46" height="46" decoding="async" />
       <span class="nav__brand-text">
         <strong>USTEDI</strong>
-        <small>PKKMB 2025</small>
+        <small>PKKMB 2026</small>
       </span>
     </a>
     <nav class="nav__links">
@@ -131,7 +131,20 @@
         <div class="field">
           <label>Kamu tahu USTEDI dari mana? <span class="req">*</span></label>
           <p class="hint">Pilih salah satu sumber utama.</p>
-          <div class="options" id="options" role="radiogroup" aria-label="Sumber informasi"></div>
+          <div class="options" id="options" role="radiogroup" aria-label="Sumber informasi">
+            <label class="opt-item" data-value="Media Sosial"><input type="radio" name="sumber" value="Media Sosial" /><span class="emoji">📱</span><span class="txt">Media Sosial</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Teman / Sahabat"><input type="radio" name="sumber" value="Teman / Sahabat" /><span class="emoji">🧑‍🤝‍🧑</span><span class="txt">Teman / Sahabat</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Dosen / Guru"><input type="radio" name="sumber" value="Dosen / Guru" /><span class="emoji">👨‍🏫</span><span class="txt">Dosen / Guru</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Mitra Kampus / Sekolah"><input type="radio" name="sumber" value="Mitra Kampus / Sekolah" /><span class="emoji">🏫</span><span class="txt">Mitra Kampus / Sekolah</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Saudara / Keluarga"><input type="radio" name="sumber" value="Saudara / Keluarga" /><span class="emoji">👨‍👩‍👧</span><span class="txt">Saudara / Keluarga</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Alumni USTEDI"><input type="radio" name="sumber" value="Alumni USTEDI" /><span class="emoji">🎓</span><span class="txt">Alumni USTEDI</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Website Resmi USTEDI"><input type="radio" name="sumber" value="Website Resmi USTEDI" /><span class="emoji">🌐</span><span class="txt">Website Resmi USTEDI</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Grup WhatsApp / Broadcast"><input type="radio" name="sumber" value="Grup WhatsApp / Broadcast" /><span class="emoji">💬</span><span class="txt">Grup WhatsApp / Broadcast</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Pameran / Event Pendidikan"><input type="radio" name="sumber" value="Pameran / Event Pendidikan" /><span class="emoji">📢</span><span class="txt">Pameran / Event Pendidikan</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Brosur / Spanduk / Baliho"><input type="radio" name="sumber" value="Brosur / Spanduk / Baliho" /><span class="emoji">📄</span><span class="txt">Brosur / Spanduk / Baliho</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Instansi / Tempat Kerja"><input type="radio" name="sumber" value="Instansi / Tempat Kerja" /><span class="emoji">🏢</span><span class="txt">Instansi / Tempat Kerja</span><span class="tick"></span></label>
+            <label class="opt-item" data-value="Lainnya"><input type="radio" name="sumber" value="Lainnya" /><span class="emoji">✨</span><span class="txt">Lainnya</span><span class="tick"></span></label>
+          </div>
           <small class="err" data-err="sumber"></small>
         </div>
 
@@ -265,7 +278,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="assets/js/config.js?v=2026.1"></script>
+<script src="assets/js/app.js?v=2026.1"></script>
 </body>
 </html>
