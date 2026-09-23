@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b1220" />
+<title>Polling PKKMB — Kamu Tahu USTEDI Dari Mana?</title>
+<meta name="description" content="Polling PKKMB Universitas Sains Teknologi Ekonomi Digital Indonesia (USTEDI). Ceritakan dari mana kamu tahu USTEDI dan lihat hasilnya secara live." />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Polling PKKMB — Kamu Tahu USTEDI Dari Mana?" />
+<meta property="og:description" content="Isi pollingnya, lihat hasil live-nya. Satu klik, langsung masuk ke Google Spreadsheet." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="#top">
+      <span class="nav__logo">U</span>
+      <span class="nav__brand-text">
+        <strong>USTEDI</strong>
+        <small>PKKMB 2025</small>
+      </span>
+    </a>
+    <nav class="nav__links">
+      <a href="#polling">Polling</a>
+      <a href="#hasil">Hasil Live</a>
+      <a href="#tentang">Tentang</a>
+    </nav>
+    <a href="#polling" class="btn btn--sm btn--primary nav__cta">Isi Polling</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero__glow hero__glow--1"></div>
+  <div class="hero__glow hero__glow--2"></div>
+  <div class="hero__grid"></div>
+
+  <div class="container hero__inner">
+    <span class="pill">
+      <span class="pill__dot"></span> PKKMB Universitas Sains Teknologi Ekonomi Digital Indonesia
+    </span>
+
+    <h1 class="hero__title">
+      Kamu Tahu <span class="grad">USTEDI</span><br />Dari Mana Aja?
+    </h1>
+
+    <p class="hero__sub">
+      Bantu kami memetakan jalur informasi yang paling ampuh. Cukup pilih satu sumber,
+      lihat hasilnya berubah <strong>secara live</strong> — dan datanya langsung tercatat
+      di Google Spreadsheet panitia.
+    </p>
+
+    <div class="hero__actions">
+      <a href="#polling" class="btn btn--primary btn--lg">
+        Isi Polling Sekarang
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#hasil" class="btn btn--ghost btn--lg">Lihat Hasil</a>
+    </div>
+
+    <div class="hero__stats">
+      <div class="stat">
+        <span class="stat__num" id="heroTotal">0</span>
+        <span class="stat__label">Responden</span>
+      </div>
+      <div class="stat__divider"></div>
+      <div class="stat">
+        <span class="stat__num" id="heroOptions">12</span>
+        <span class="stat__label">Pilihan Sumber</span>
+      </div>
+      <div class="stat__divider"></div>
+      <div class="stat">
+        <span class="stat__num" id="heroUpdated">—</span>
+        <span class="stat__label">Update Terakhir</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POLLING ================= -->
+<section class="section" id="polling">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Formulir Polling</span>
+      <h2 class="section__title">Isi Polling, 30 Detik Selesai</h2>
+      <p class="section__desc">Data kamu hanya dipakai untuk keperluan evaluasi promosi kampus PKKMB USTEDI.</p>
+    </div>
+
+    <div class="poll-wrap">
+      <!-- ---------- FORM ---------- -->
+      <form class="card poll-card" id="pollForm" novalidate>
+        <div class="field">
+          <label for="nama">Nama Lengkap <span class="req">*</span></label>
+          <input type="text" id="nama" name="nama" placeholder="Contoh: Muh. Rafi Hidayat" autocomplete="name" required maxlength="80" />
+          <small class="err" data-err="nama"></small>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="asal">Asal Sekolah / Instansi <span class="req">*</span></label>
+            <input type="text" id="asal" name="asal" placeholder="Contoh: SMAN 1 Kendari" required maxlength="120" />
+            <small class="err" data-err="asal"></small>
+          </div>
+          <div class="field">
+            <label for="status">Status Kamu <span class="req">*</span></label>
+            <select id="status" name="status" required>
+              <option value="">— Pilih status —</option>
+              <option>Siswa SMA/SMK/MA</option>
+              <option>Mahasiswa</option>
+              <option>Guru / Dosen</option>
+              <option>Orang Tua / Wali</option>
+              <option>Alumni</option>
+              <option>Umum</option>
+            </select>
+            <small class="err" data-err="status"></small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Kamu tahu USTEDI dari mana? <span class="req">*</span></label>
+          <p class="hint">Pilih salah satu sumber utama.</p>
+          <div class="options" id="options" role="radiogroup" aria-label="Sumber informasi"></div>
+          <small class="err" data-err="sumber"></small>
+        </div>
+
+        <!-- Detail khusus media sosial -->
+        <div class="field field--hidden" id="sosmedField">
+          <label>Platform media sosialnya apa? <span class="opt">(opsional)</span></label>
+          <div class="chips" id="sosmedChips"></div>
+        </div>
+
+        <!-- Detail lainnya -->
+        <div class="field field--hidden" id="lainnyaField">
+          <label for="lainnya">Sebutkan sumber lainnya <span class="opt">(opsional)</span></label>
+          <input type="text" id="lainnya" name="lainnya" placeholder="Contoh: spanduk di depan pasar" maxlength="120" />
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="izin" checked />
+          <span>Saya setuju data ini digunakan untuk evaluasi PKKMB USTEDI.</span>
+        </label>
+
+        <button type="submit" class="btn btn--primary btn--block btn--lg" id="submitBtn">
+          Kirim Jawaban
+        </button>
+
+        <p class="form-note">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Tersimpan otomatis ke Google Spreadsheet panitia
+        </p>
+      </form>
+
+      <!-- ---------- SUCCESS ---------- -->
+      <div class="card success-card" id="successCard" hidden>
+        <div class="success__icon">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h3>Terima kasih, <span id="successName">Sobat</span>! 🎉</h3>
+        <p>Jawabanmu sudah tercatat. Hasil polling di samping langsung ter-update.</p>
+        <div class="success__actions">
+          <button class="btn btn--primary" id="shareBtn">Bagikan ke WhatsApp</button>
+          <button class="btn btn--ghost" id="againBtn">Isi Lagi</button>
+        </div>
+      </div>
+
+      <!-- ---------- RESULTS ---------- -->
+      <aside class="card result-card" id="hasil">
+        <div class="result__head">
+          <div>
+            <h3>Hasil Live</h3>
+            <p class="result__meta">
+              <span id="resultTotal">0</span> responden ·
+              <span id="resultUpdated">menunggu data…</span>
+            </p>
+          </div>
+          <button class="icon-btn" id="refreshBtn" title="Muat ulang hasil" aria-label="Muat ulang hasil">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          </button>
+        </div>
+
+        <div class="bars" id="bars"></div>
+        <p class="result__empty" id="resultEmpty" hidden>Belum ada jawaban. Jadilah yang pertama! 🚀</p>
+
+        <div class="subresult" id="subresult" hidden>
+          <h4>Rincian Media Sosial</h4>
+          <div class="bars bars--sm" id="subBars"></div>
+        </div>
+
+        <div class="result__foot">
+          <span class="live-dot"></span> Auto-refresh tiap <span id="refreshSec">15</span> detik
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TENTANG ================= -->
+<section class="section section--alt" id="tentang">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Tentang</span>
+      <h2 class="section__title">Kenapa Polling Ini Penting?</h2>
+      <p class="section__desc">Hasilnya jadi dasar strategi promosi kampus ke depan — biar makin banyak yang kenal USTEDI.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card feature">
+        <div class="feature__icon">📊</div>
+        <h3>Data Real-Time</h3>
+        <p>Setiap jawaban langsung masuk ke Google Spreadsheet dan tampil di grafik tanpa reload halaman.</p>
+      </article>
+      <article class="card feature">
+        <div class="feature__icon">🎯</div>
+        <h3>Promosi Tepat Sasaran</h3>
+        <p>Ketahuan kanal mana yang paling efektif, jadi anggaran promosi tidak terbuang percuma.</p>
+      </article>
+      <article class="card feature">
+        <div class="feature__icon">🤝</div>
+        <h3>Kolaborasi Mitra</h3>
+        <p>Data per sekolah dan instansi membantu panitia menjaga hubungan dengan mitra kampus.</p>
+      </article>
+      <article class="card feature">
+        <div class="feature__icon">⚡</div>
+        <h3>Ringan & Cepat</h3>
+        <p>Tanpa framework berat. Bisa dibuka dari HP lewat QR code saat acara PKKMB berlangsung.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div>
+      <strong>USTEDI</strong> — Universitas Sains Teknologi Ekonomi Digital Indonesia
+      <p class="footer__sub">Polling PKKMB · Panitia Pengenalan Kehidupan Kampus</p>
+    </div>
+    <div class="footer__links">
+      <a href="#polling">Isi Polling</a>
+      <a href="#hasil">Hasil Live</a>
+      <a href="https://github.com/muhrafihdr/PKKMBUSTEDI" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
