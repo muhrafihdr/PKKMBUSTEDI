@@ -444,6 +444,10 @@
       window.addEventListener('resize', syncNav);
     }
 
+    // tahun copyright otomatis
+    var yearEl = $('#year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
     // navbar
     var nav = $('#nav');
     var onScroll = function () { nav.classList.toggle('is-stuck', window.scrollY > 30); };
