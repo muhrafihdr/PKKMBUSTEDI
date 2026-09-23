@@ -121,6 +121,15 @@ Semua pengaturan ada di **`assets/js/config.js`**:
 📢 Pameran/Event Pendidikan · 📄 Brosur/Spanduk/Baliho ·
 🏢 Instansi/Tempat Kerja · ✨ Lainnya
 
+### Pilihan "Status Kamu" (Program Studi)
+
+Mahasiswa S1 Manajemen · Mahasiswa S1 Akuntansi · Mahasiswa S2 Manajemen ·
+Mahasiswa S1 Sains Data · Mahasiswa S1 Teknik Industri · Mahasiswa S1 Informatika
+
+> Daftar ini diatur langsung di `index.html` pada elemen `<select id="status">`.
+> Backend tidak membatasi nilainya, jadi menambah/mengubah opsi cukup di HTML saja.
+> Kolom `Status` di spreadsheet akan mencatat nilai apa adanya.
+
 ---
 
 ## 🧪 Mode Demo
