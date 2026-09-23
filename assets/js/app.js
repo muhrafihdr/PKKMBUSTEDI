@@ -433,10 +433,15 @@
     if (DEMO) {
       var b = document.createElement('div');
       b.className = 'demo-banner';
-      b.innerHTML = '⚠️ <strong>Mode Demo</strong> — belum terhubung ke Google Spreadsheet. ' +
-        'Isi <code>API_URL</code> di <code>assets/js/config.js</code> (lihat README.md).';
+      b.innerHTML = '⚠️ <strong>Mode Demo</strong> — belum terhubung ke Google Spreadsheet, ' +
+        'angka di bawah hanyalah <em>data contoh</em>. Isi <code>API_URL</code> di ' +
+        '<code>assets/js/config.js</code> (lihat README.md).';
       document.body.insertBefore(b, document.body.firstChild);
-      $('#nav').style.top = '38px';
+
+      var nav = $('#nav');
+      var syncNav = function () { nav.style.top = b.offsetHeight + 'px'; };
+      syncNav();
+      window.addEventListener('resize', syncNav);
     }
 
     // navbar
