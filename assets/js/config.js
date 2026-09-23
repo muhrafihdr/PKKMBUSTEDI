@@ -12,8 +12,8 @@
    ========================================================================== */
 
 window.PKKMB_CONFIG = {
-  /* contoh: 'https://script.google.com/macros/s/AKfycb...../exec' */
-  API_URL: '',
+  API_URL:
+    'https://script.google.com/macros/s/AKfycbxd0oOxhX8ubKO2vYBcQgBaSu4KM4kfVK5uRhCC59DdMAtlegP-ewnxCpI4PxpbBEYY/exec',
 
   /* Nama spreadsheet tujuan (hanya untuk ditampilkan) */
   SPREADSHEET_URL:
