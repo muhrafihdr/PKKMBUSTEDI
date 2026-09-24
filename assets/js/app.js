@@ -16,6 +16,17 @@
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
+  /* Cari elemen terdekat yang cocok, tanpa bergantung pada Element.closest
+     (tidak ada di sebagian browser dalam aplikasi / WebView lama). */
+  function closestByClass(node, className, boundary) {
+    var el = node;
+    while (el && el !== boundary) {
+      if (el.classList && el.classList.contains(className)) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
   /* Daftar pilihan polling. Prioritas: config.js → opsi statis di HTML.
      Jadi pilihan tetap muncul walau config.js tidak sempat dimuat/diblokir. */
   function pollOptions() {
@@ -191,21 +202,38 @@
     }).join('');
 
     var pick = function (target) {
-      var item = (target && target.closest) ? target.closest('.opt-item') : null;
-      if (!item) {
-        var el = target;
-        while (el && el !== wrap) {
-          if (el.classList && el.classList.contains('opt-item')) { item = el; break; }
-          el = el.parentNode;
-        }
-      }
+      var item = closestByClass(target, 'opt-item', wrap);
       if (item) selectSumber(item.getAttribute('data-value'));
     };
 
     wrap.addEventListener('click', function (e) { pick(e.target); });
-    // Fallback andal untuk HP / browser dalam aplikasi: pakai event native radio.
+    // Sumber utama di HP: event native radio. Karena input transparan
+    // menutupi seluruh kartu, tap di mana pun akan memicu event ini.
     wrap.addEventListener('change', function (e) {
       if (e.target && e.target.name === 'sumber') selectSumber(e.target.value);
+    });
+    // Cadangan untuk browser dalam aplikasi yang kadang tidak mengirim
+    // event click pada <label>: tangani touchend/pointerup. Tetap dicek
+    // jarak geser jari supaya tidak salah pilih saat pengguna men-scroll.
+    var startPt = null;
+    var lastTouch = 0;
+    wrap.addEventListener('touchstart', function (e) {
+      var t = e.touches && e.touches[0];
+      startPt = t ? { x: t.clientX, y: t.clientY } : null;
+    }, { passive: true });
+    wrap.addEventListener('touchend', function (e) {
+      lastTouch = Date.now();
+      var t = e.changedTouches && e.changedTouches[0];
+      if (startPt && t) {
+        var dx = t.clientX - startPt.x, dy = t.clientY - startPt.y;
+        if (dx * dx + dy * dy > 100) return; // geser > 10px dianggap scroll
+      }
+      pick(e.target);
+    }, { passive: true });
+    wrap.addEventListener('pointerup', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse') return; // sentuhan ditangani touchend
+      if (Date.now() - lastTouch < 600) return;
+      pick(e.target);
     });
   }
 
@@ -216,7 +244,7 @@
     }).join('');
 
     wrap.addEventListener('click', function (e) {
-      var chip = e.target.closest('.chip');
+      var chip = closestByClass(e.target, 'chip', wrap);
       if (!chip) return;
       var val = chip.getAttribute('data-value');
       state.sosmed = (state.sosmed === val) ? '' : val;

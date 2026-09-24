@@ -307,24 +307,40 @@ button,input,select{ font:inherit; color:inherit; }
 }
 .opt-item:active{ transform:scale(.985); }
 .opt-item:hover{ border-color:#c7d2fe; background:#fff; transform:translateY(-1px); }
-.opt-item input{ position:absolute; opacity:0; pointer-events:none; }
-.opt-item .emoji{ font-size:19px; line-height:1; flex:0 0 auto; }
-.opt-item .txt{ flex:1 1 auto; min-width:0; }
+/* Radio asli dibuat transparan & menutupi SELURUH kartu.
+   Tujuannya: tap di mana pun (khususnya iOS Safari & browser dalam
+   aplikasi seperti WhatsApp/Instagram) langsung mengenai input-nya,
+   bukan elemen <span> di dalam <label>. Ini penyebab utama pilihan
+   terasa "tidak terpilih" saat diisi lewat HP. */
+.opt-item input{
+  position:absolute; inset:0; width:100%; height:100%;
+  margin:0; padding:0; opacity:0; cursor:pointer; z-index:2;
+  -webkit-appearance:none; appearance:none;
+}
+.opt-item .emoji{ font-size:19px; line-height:1; flex:0 0 auto; pointer-events:none; }
+.opt-item .txt{ flex:1 1 auto; min-width:0; pointer-events:none; }
 .opt-item .tick{
   margin-left:auto; width:18px; height:18px; flex:0 0 auto;
   border:2px solid #cbd5e1; border-radius:50%;
   display:grid; place-items:center; transition:all .18s;
+  pointer-events:none;
 }
 .opt-item .tick::after{
   content:''; width:8px; height:8px; border-radius:50%;
   background:#fff; transform:scale(0); transition:transform .18s;
 }
-.opt-item.is-active{
+/* Status terpilih digerakkan DUA arah:
+   1) :has(input:checked) -> murni CSS, bekerja walau JS telat/gagal.
+   2) .is-active           -> cadangan untuk browser lama tanpa :has(). */
+.opt-item.is-active,
+.opt-item:has(input:checked){
   border-color:var(--brand); background:var(--brand-soft);
   box-shadow:0 0 0 4px rgba(37,99,235,.1);
 }
-.opt-item.is-active .tick{ border-color:var(--brand); background:var(--brand); }
-.opt-item.is-active .tick::after{ transform:scale(1); }
+.opt-item.is-active .tick,
+.opt-item:has(input:checked) .tick{ border-color:var(--brand); background:var(--brand); }
+.opt-item.is-active .tick::after,
+.opt-item:has(input:checked) .tick::after{ transform:scale(1); }
 
 /* ---------- Chips ---------- */
 .chips{ display:flex; flex-wrap:wrap; gap:8px; }
